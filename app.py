@@ -3,6 +3,10 @@ import pandas as pd
 import numpy as np
 
 
+# Define varaibles
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+batch_size = 4
+
 class myDataset(torch.utils.data.Dataset):
     def __init__(self):
         data = pd.read_csv('data-GBPUSD.csv', header=0)
@@ -26,6 +30,6 @@ class myDataset(torch.utils.data.Dataset):
     def __len__(self):
         return len(self.x)
 
-
-ds = myDataset()
-print(ds[0])
+print("Available Device: " ,device)
+ds=myDataset()
+trainDataloader=torch.utils.data.DataLoader(dataset=ds, batch_size=batch_size, shuffle=True)
